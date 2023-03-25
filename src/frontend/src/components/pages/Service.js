@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../../App.css';
 import Modifiers from '../Modifiers';
-import DropZone from '../DropZone';
+import FileUploader from '../FileUpload';
 
 export default function Service() {
   const [modifs, setModif] = useState(["Modifier 1", "Modifier 2"])
@@ -13,7 +13,7 @@ export default function Service() {
       <button>Add Modifier</button>
       <button>Clear selected Modifiers</button>
       <div>Search for: </div>
-      <DropZone />
+      <FileUploader />
     </div>
   );
 }
