@@ -1,0 +1,22 @@
+FROM python:latest
+
+WORKDIR /app
+
+COPY requirements.txt /app/requirements.txt
+RUN pip install -U pip
+RUN python -m pip install -r requirements.txt
+
+# copy over the model
+COPY /models /app/models
+
+ARG PORT=5000
+
+ENV PORT=${PORT}
+
+EXPOSE ${PORT}
+
+COPY /templates /app/templates
+COPY main.py /app/main.py
+
+
+CMD uvicorn main:app --host 0.0.0.0 --port ${PORT}
