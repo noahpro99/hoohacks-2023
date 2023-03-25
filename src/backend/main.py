@@ -51,18 +51,19 @@ app.add_middleware(
 @app.get("/")
 async def read_root():
     if (app.state.model is None or app.state.processor is None):
-        return {"suspicious_ai": "Model not loaded"}
-    return {"suspicious_ai": "This api allows you to check for suspicious activity within a image or video."}
+        return {"error": "Model not loaded"}
+    return {"message": "Hello World from BinGo!"}
 
 
 @app.post("/best_bin")
 async def best_bin(request: BestBinRequest) -> dict:
     model, processor = app.state.model, app.state.processor
-    temp_image_path: str = "images/temp.jpg"
+    temp_image_path: str = "temp.jpg"
     with open(temp_image_path, "wb") as f:
         f.write(base64.b64decode(request.image_base64.encode()))
         image = Image.open(temp_image_path)
         f.close()
+    os.remove(temp_image_path)
 
     print(image)
     inputs = processor(text=request.bin_names, images=image, return_tensors="pt", padding=True)

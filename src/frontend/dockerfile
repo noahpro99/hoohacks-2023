@@ -1,0 +1,16 @@
+# dev environment
+FROM node:18-alpine
+WORKDIR /app
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+ARG PORT=80
+ARG API_URL=http://backend:5000
+ENV PORT=${PORT}
+ENV REACT_APP_API_URL=${API_URL}
+COPY . .
+EXPOSE ${PORT}
+
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--port", "${PORT}"]
+
+
