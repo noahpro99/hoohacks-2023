@@ -78,6 +78,7 @@ export default function Service() {
     console.log(targetCoords);
     return (
       <motion.img
+        className='rounded-2xl shadow-2xl '
         src={image}
         alt="My Image"
         style={{
@@ -108,7 +109,7 @@ export default function Service() {
           {
             (binResultName && image) ?
               (<motion.img
-                className='h-96'
+                className='h-96 mt-5 rounded-2xl shadow-2xl '
                 src={image}
                 alt="My Image"
                 animate={{
@@ -119,7 +120,7 @@ export default function Service() {
               />)
               :
               <img
-                className='h-96'
+                className='h-96 mt-5 rounded-2xl shadow-2xl '
                 src={image}
                 alt=""
               />
@@ -133,13 +134,13 @@ export default function Service() {
               return <button
                 className="text-white border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
                 type="button"
-                id={`bin_${(index - 1).toString()}`}
+                id={`bin_${(index).toString()}`}
                 key={index} onClick={() => {
                   setBins(bins.filter((b) => b !== bin));
                   setUnSelectedBins([...unSelectedBins, bin]);
                 }}>
                 <img
-                  className='h-36'
+                  className='h-36 rounded-2xl shadow-2xl'
                   alt={bin}
                   src={`${map[bin]}`}>
                 </img>
@@ -149,16 +150,6 @@ export default function Service() {
           <DropdownButton unSelectedBins={unSelectedBins} setBins={setBins} setUnSelectedBins={setUnSelectedBins} />
           <button className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-white hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
             onClick={onClickClick}>Submit</button>
-          {binResultName &&
-            <div className="flex flex-wrap items-center">
-              <div className="text-4xl text-center text-white pt-2"
-              >Result</div>
-              <div className="text-4xl text-center text-white"
-              >{binResultName}</div>
-              <div className="text-4xl text-center text-white"
-              >{binResultProb}</div>
-            </div>
-          }
         </div>
       </div>
     </div >

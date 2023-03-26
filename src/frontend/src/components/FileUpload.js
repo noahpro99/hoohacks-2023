@@ -61,7 +61,7 @@ export default function App(props) {
   return (
     <div className="drag-drop-container mt-6">
       <div
-        className={`dropzone${dragging ? " dragging" : ""}`}
+        className={` p-3 dropzone${dragging ? " dragging" : ""}`}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
