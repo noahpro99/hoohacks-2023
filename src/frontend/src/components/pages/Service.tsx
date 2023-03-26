@@ -3,8 +3,11 @@ import '../../App.css';
 import FileUploader from '../FileUpload';
 import { sortRequest } from '../../types';
 import DropdownButton from '../DropDownMenu';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Service() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [image, setImage] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -13,6 +16,23 @@ export default function Service() {
   const [binResultProb, setBinResultProb] = React.useState(0);
   const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['recycle plastic', 'recycle paper']);
 
+  React.useEffect(() => {
+    if (searchParams.get('image')) {
+      fetch('images/1.txt')
+        .then(response => response.text())
+        .then(data => {
+          setImage(data);
+        }
+        )
+        .catch((error) => {
+          console.error('Error:', error);
+        }
+        );
+    }
+    else {
+      setImage("");
+    }
+  }, [searchParams]);
 
   const onClickClick = () => {
     setLoading(true);
@@ -51,7 +71,9 @@ export default function Service() {
         <div className="flex flex-col items-center mx-4">
           <FileUploader setImage={setImage} image={image} />
           {image && <img className="h-96"
-            src={image} alt="uploaded" />}
+            src={image}
+            alt="upload"
+          />}
         </div>
         <div className="flex flex-col items-center justify-start mx-10">
           <div className="flex flex-wrap mx-4">

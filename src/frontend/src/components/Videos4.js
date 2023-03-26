@@ -12,7 +12,7 @@ function Videos4() {
             <VideoItem
               src='images/img-1.jpg'
               text='Shop Robbery'
-              path='/service'
+              path='/service?image=1'
             /> 
             <VideoItem
               src='images/img-1.jpg'
