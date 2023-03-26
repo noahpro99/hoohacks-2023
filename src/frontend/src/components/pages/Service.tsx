@@ -7,12 +7,12 @@ import DropdownButton from '../DropDownMenu';
 
 export default function Service() {
   const [image, setImage] = React.useState("");
+  const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [bins, setBins] = React.useState<string[]>(['trash', 'recycle', 'compost']);
   const [binResultName, setBinResultName] = React.useState("");
   const [binResultProb, setBinResultProb] = React.useState(0);
   const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['recycle plastic', 'recycle paper']);
-  const [targetCoords, setTargetCoords] = React.useState({ x: 0, y: 0 });
 
 
   const onClickClick = () => {
@@ -20,7 +20,7 @@ export default function Service() {
     console.log("clicked")
 
     // fetch to backend and get the response with post
-    fetch(`${process.env.REACT_APP_API_URL}/best_bin`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/best_bin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,11 +34,7 @@ export default function Service() {
       .then(data => {
         console.log(data);
         setBinResultName(data.bin_name);
-
-
-        const target = document.getElementById(`bin_${data.idx.toString()}`);
-        const targetCoords = target?.getBoundingClientRect();
-        setTargetCoords({ x: targetCoords?.x || 0, y: targetCoords?.y || 0 });
+        setBinResultProb(data.prob);
       }
       )
       .catch((error) => {
@@ -49,65 +45,41 @@ export default function Service() {
   };
 
   const MovingAnimation = () => {
-    console.log(targetCoords);
     return(
       <motion.img
-        src={image}
-        alt="My Image"
-        style={{
-          width: '200px',
+      src={'../../images/img-Mik.jpg'}
+      alt="My Image"
+      style={{
+        width: 200,
+        height: 200,
+        borderRadius: '50%',
+        overflow: 'hidden',
         position: 'absolute',
       }}
       animate={{
-        x: [targetCoords.x, targetCoords.x],
-        y: [targetCoords.y - 75, targetCoords.y],
-
-        opacity: [1, 0],
-        scale: [1, 0.5],
-        transition: { duration: 3, ease: 'easeInOut' },
-
+        x: [800, 800],
+        y: [100, 400],
+        transition: { duration: 3, repeat: Infinity },
       }}
     />
     );
   };
   return (
     <div className="bg-[#3c4150] min-h-screen text-white" >
-      {binResultName &&
-        <MovingAnimation />}
+      <MovingAnimation />
       <h1 className="text-4xl text-center pt-6 text-white"
       >Service</h1>
       <div className="grid grid-cols-2 m-10">
         <div className="flex flex-col items-center mx-4">
-          <FileUploader setImage={setImage} image={image} setBinResultName={setBinResultName} />
-          {
-            (binResultName && image) ?
-              (<motion.img
-                className='h-96'
-                src={image}
-                alt="My Image"
-                animate={{
-                  opacity: [1, 0],
-                  scale: [1, 0.9],
-                  transition: { duration: 1, ease: 'easeInOut' },
-                }}
-              />)
-              :
-              <img
-                className='h-96'
-                src={image}
-                alt=""
-              />
-
-          }
-
+          <FileUploader setImage={setImage} image={image} />
+          {image && <img className="h-96"
+            src={image} alt="uploaded" />}
         </div>
         <div className="flex flex-col items-center justify-start mx-10">
           <div className="flex flex-wrap mx-4">
             {bins.map((bin, index) => {
               return <button
                 className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
-                type="button"
-                id={`bin_${(index - 1).toString()}`}
                 key={index} onClick={() => {
                   setBins(bins.filter((b) => b !== bin));
                   setUnSelectedBins([...unSelectedBins, bin]);
@@ -131,6 +103,7 @@ export default function Service() {
               >{binResultName}</div>
               <div className="text-4xl text-center text-white"
               >{binResultProb}</div>
+              {/* <MovingAnimation /> */}
             </div>
           }
         </div>

@@ -48,7 +48,6 @@ export default function App(props) {
       const reader = new FileReader();
       reader.onload = (event) => {
         props.setImage(event.target.result);
-        props.setBinResultName(null);
         console.log(event.target.result);
         console.log(props.image);
       };
