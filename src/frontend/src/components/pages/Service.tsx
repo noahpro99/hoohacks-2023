@@ -14,8 +14,14 @@ export default function Service() {
   const [bins, setBins] = React.useState<string[]>(['trash', 'recycle - plastic, glass, metal', 'compost - paper, food']);
   const [binResultName, setBinResultName] = React.useState("");
   const [binResultProb, setBinResultProb] = React.useState(0);
-  const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['', '']);
+  const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['batteries', 'e-waste']);
 
+  const map: { [id: string]: string; } = {};
+  map['trash'] = 'images/trash.png';
+  map['recycle - plastic, glass, metal'] = 'images/recycle.png';
+  map['compost - paper, food'] = 'images/compost.png';
+  map['batteries'] = 'images/batteries.png';
+  map['e-waste'] = 'images/e-waste.png';
   React.useEffect(() => {
     if (searchParams.get('image')) {
       fetch(`images/${searchParams.get('image')}.txt`)
@@ -64,7 +70,7 @@ export default function Service() {
   };
 
   return (
-    <div className="bg-[#3c4150] min-h-screen text-white" >
+    <div className="bg-[#242e52] min-h-screen text-white" >
       <h1 className="text-4xl text-center pt-6 text-white"
       >Service</h1>
       <div className="grid grid-cols-2 m-10">
@@ -76,7 +82,7 @@ export default function Service() {
           />}
         </div>
         <div className="flex flex-col items-center justify-start mx-10">
-          <div className="flex flex-wrap mx-4">
+          <div className="flex flex-wrap mx-4 mt-16">
             {bins.map((bin, index) => {
               return <button
                 className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
@@ -85,10 +91,10 @@ export default function Service() {
                   setUnSelectedBins([...unSelectedBins, bin]);
                 }}>
                 <img
-                  className='h-32'
+                  className='h-36'
                   alt={bin}
-                  src='../../images/img-Mik.jpg' />
-                {bin}
+                  src= {`${map[bin]}`}> 
+                  </img>  
               </button>
             })}
           </div>
