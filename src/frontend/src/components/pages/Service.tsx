@@ -8,10 +8,10 @@ export default function Service() {
   const [image, setImage] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [bins, setBins] = React.useState<string[]>(['trash', 'recycle', 'compost']);
+  const [bins, setBins] = React.useState<string[]>(['trash', 'recycle - plastic, glass, metal', 'compost - paper, food']);
   const [binResultName, setBinResultName] = React.useState("");
   const [binResultProb, setBinResultProb] = React.useState(0);
-  const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['recycle plastic', 'recycle paper']);
+  const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['', '']);
 
 
   const onClickClick = () => {
@@ -19,7 +19,7 @@ export default function Service() {
     console.log("clicked")
 
     // fetch to backend and get the response with post
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/best_bin`, {
+    fetch(`${process.env.REACT_APP_API_URL}/best_bin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

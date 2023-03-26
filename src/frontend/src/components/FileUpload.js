@@ -25,7 +25,9 @@ export default function App(props) {
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+    console.log(e);
+    console.log(e.target);
+    console.log(e.target.files);
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
