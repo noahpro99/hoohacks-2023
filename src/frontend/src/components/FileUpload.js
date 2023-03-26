@@ -58,7 +58,7 @@ export default function App(props) {
   };
 
   return (
-    <div className="drag-drop-container">
+    <div className="drag-drop-container mt-6">
       <div
         className={`dropzone${dragging ? " dragging" : ""}`}
         onDragEnter={handleDragEnter}

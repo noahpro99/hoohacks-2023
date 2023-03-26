@@ -82,10 +82,10 @@ export default function Service() {
           />}
         </div>
         <div className="flex flex-col items-center justify-start mx-10">
-          <div className="flex flex-wrap mx-4 mt-16">
+          <div className="flex flex-wrap mx-4 mt-6">
             {bins.map((bin, index) => {
               return <button
-                className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
+                className="text-white border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
                 key={index} onClick={() => {
                   setBins(bins.filter((b) => b !== bin));
                   setUnSelectedBins([...unSelectedBins, bin]);
