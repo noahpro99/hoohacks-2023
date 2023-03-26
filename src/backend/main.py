@@ -36,7 +36,7 @@ async def lifespan(app: FastAPI) -> None:
 app = FastAPI(title="BinGo", description="BinGo is a tool to identify the correct bin that your trash goes into.", version="0.1.0", lifespan=lifespan)
 
 origins = [
-    "http://localhost",
+    "*", # allow all origins
 ]
 
 app.add_middleware(
@@ -63,13 +63,15 @@ async def best_bin(request: BestBinRequest) -> dict:
         f.write(base64.b64decode(request.image_base64.encode()))
         image = Image.open(temp_image_path)
         f.close()
-    os.remove(temp_image_path)
+    # os.remove(temp_image_path)
 
     print(image)
     inputs = processor(text=request.bin_names, images=image, return_tensors="pt", padding=True)
     outputs = model(**inputs)
     probabilities = outputs.logits_per_image.softmax(dim=1)
-    return {"probs": probabilities.tolist()}
+    return {"idx": int(probabilities.argmax()),
+            "prob": float(probabilities.max()),
+            "bin_name": request.bin_names[int(probabilities.argmax())]}
 
 
 
