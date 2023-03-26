@@ -1,9 +1,7 @@
 import "./FileUpload";
 import React, { useState } from "react";
 
-export default function App() {
-  // const [file, setFile] = useState(null);
-  const [image, setImage] = useState(null);
+export default function App(props) {
 
   const [dragging, setDragging] = useState(false);
 
@@ -28,8 +26,19 @@ export default function App() {
     e.preventDefault();
     e.stopPropagation();
 
-    const newFile = e.dataTransfer.files[0];
-    console.log(newFile);
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        props.setImage(event.target.result);
+        console.log(event.target.result);
+        console.log(props.image);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // const newFile = e.dataTransfer.files[0];
+    // console.log(newFile);
   };
   // Do something with the dropped file (e.g. upload it to a server)
 
@@ -38,9 +47,9 @@ export default function App() {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setImage(event.target.result);
+        props.setImage(event.target.result);
         console.log(event.target.result);
-        console.log(image);
+        console.log(props.image);
       };
       reader.readAsDataURL(file);
     }
@@ -74,13 +83,6 @@ export default function App() {
             Add Image
           </label>
         </div>
-      </div>
-      <div className="image-preview-container">
-        {image ? (
-          <img src={image} alt="Preview" className="image-preview" />
-        ) : (
-          <p>No image selected</p>
-        )}
       </div>
     </div>
   );
