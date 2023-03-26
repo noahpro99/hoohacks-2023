@@ -7,7 +7,7 @@ function Footer() {
     <div className='footer-container'>
       <section className='social-media'>
         <div className='social-media-wrap'>
-          <small className='website-rights'>BinGo © 2023</small>
+          <small className='website-rights'>BinGoSort © 2023</small>
           <div className='social-icons'>
             <Link
               className='social-icon-link facebook'
