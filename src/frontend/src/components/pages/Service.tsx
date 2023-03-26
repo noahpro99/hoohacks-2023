@@ -18,7 +18,7 @@ export default function Service() {
 
   React.useEffect(() => {
     if (searchParams.get('image')) {
-      fetch('images/1.txt')
+      fetch(`images/${searchParams.get('image')}.txt`)
         .then(response => response.text())
         .then(data => {
           setImage(data);
@@ -70,7 +70,7 @@ export default function Service() {
       <div className="grid grid-cols-2 m-10">
         <div className="flex flex-col items-center mx-4">
           <FileUploader setImage={setImage} image={image} />
-          {image && <img className="h-96"
+          {image && <img className="h-96 rounded-xl shadow-2xl m-4"
             src={image}
             alt="upload"
           />}
