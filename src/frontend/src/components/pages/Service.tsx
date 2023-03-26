@@ -13,13 +13,6 @@ export default function Service() {
   const [binResultProb, setBinResultProb] = React.useState(0);
   const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['recycle plastic', 'recycle paper']);
 
-  const addBin = () => {
-    if (unSelectedBins.length > 0) {
-      setBins([...bins, unSelectedBins[0]]);
-      setUnSelectedBins(unSelectedBins.filter((bin) => bin !== unSelectedBins[0]));
-    }
-  }
-
 
   const onClickClick = () => {
     setLoading(true);
@@ -50,48 +43,45 @@ export default function Service() {
     setLoading(false);
   };
 
-  const binDropdown = () => {
-    return (
-      <select>
-        {bins.map((bin, index) => {
-          return <option key={index}>{bin}</option>
-        })}
-      </select>
-    )
-  }
-
-
   return (
-    <div className="bg-[#40496f] min-h-screen" >
-      <h1 className="text-4xl text-center text-white"
+    <div className="bg-[#3c4150] min-h-screen text-white" >
+      <h1 className="text-4xl text-center pt-6 text-white"
       >Service</h1>
-      <div className="flex flex-col justify-center sm:flex-row">
-        <div className="flex flex-col items-center">
+      <div className="grid grid-cols-2 m-10">
+        <div className="flex flex-col items-center mx-4">
           <FileUploader setImage={setImage} image={image} />
           {image && <img className="h-96"
             src={image} alt="uploaded" />}
         </div>
-        <div className="flex flex-col items-center">
-          {bins.map((bin, index) => {
-            return <button key={index} onClick={() => {
-              setBins(bins.filter((b) => b !== bin));
-              setUnSelectedBins([...unSelectedBins, bin]);
-            }}>{bin}</button>
-          })}
-          <DropdownButton unSelectedBins={unSelectedBins} setBins={setBins} setUnSelectedBins={setUnSelectedBins} />
-
-          <button onClick={onClickClick}>Submit</button>
-          {binResultName && <div className="flex flex-col items-center">
-            <div className="flex flex-col items-center">
-              <h1 className="text-4xl text-center text-white"
-              >Result</h1>
-              <h1 className="text-4xl text-center text-white"
-              >{binResultName}</h1>
-              <h1 className="text-4xl text-center text-white"
-              >{binResultProb}</h1>
-
-            </div>
+        <div className="flex flex-col items-center justify-start mx-10">
+          <div className="flex flex-wrap mx-4">
+            {bins.map((bin, index) => {
+              return <button
+                className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-red-500 hover:border-red-500 hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
+                key={index} onClick={() => {
+                  setBins(bins.filter((b) => b !== bin));
+                  setUnSelectedBins([...unSelectedBins, bin]);
+                }}>
+                <img
+                  className='h-32'
+                  alt={bin}
+                  src='../../images/img-Mik.jpg' />
+                {bin}
+              </button>
+            })}
           </div>
+          <DropdownButton unSelectedBins={unSelectedBins} setBins={setBins} setUnSelectedBins={setUnSelectedBins} />
+          <button className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-white hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
+            onClick={onClickClick}>Submit</button>
+          {binResultName &&
+            <div className="flex flex-wrap items-center">
+              <div className="text-4xl text-center text-white pt-2"
+              >Result</div>
+              <div className="text-4xl text-center text-white"
+              >{binResultName}</div>
+              <div className="text-4xl text-center text-white"
+              >{binResultProb}</div>
+            </div>
           }
         </div>
       </div>

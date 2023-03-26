@@ -79,9 +79,6 @@ export default function App(props) {
             accept="image/*"
             onChange={handleImageUpload}
           />
-          <label htmlFor="image-file" className="add-file-button">
-            Add Image
-          </label>
         </div>
       </div>
     </div>
