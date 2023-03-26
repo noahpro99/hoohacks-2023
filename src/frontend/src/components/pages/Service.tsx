@@ -10,12 +10,12 @@ export default function Service() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [image, setImage] = React.useState("");
-  const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [bins, setBins] = React.useState<string[]>(['trash', 'recycle - plastic, glass, metal', 'compost - paper, food']);
   const [binResultName, setBinResultName] = React.useState("");
   const [binResultProb, setBinResultProb] = React.useState(0);
   const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['batteries', 'e-waste']);
+  const [targetCoords, setTargetCoords] = React.useState({ x: 0, y: 0 });
 
   const map: { [id: string]: string; } = {};
   map['trash'] = 'images/trash.png';
@@ -60,7 +60,11 @@ export default function Service() {
       .then(data => {
         console.log(data);
         setBinResultName(data.bin_name);
-        setBinResultProb(data.prob);
+
+
+        const target = document.getElementById(`bin_${data.idx.toString()}`);
+        const targetCoords = target?.getBoundingClientRect();
+        setTargetCoords({ x: targetCoords?.x || 0, y: targetCoords?.y || 0 });
       }
       )
       .catch((error) => {
@@ -71,43 +75,65 @@ export default function Service() {
   };
 
   const MovingAnimation = () => {
-    return(
+    console.log(targetCoords);
+    return (
       <motion.img
-      src={'../../images/img-Mik.jpg'}
-      alt="My Image"
-      style={{
-        width: 200,
-        height: 200,
-        borderRadius: '50%',
-        overflow: 'hidden',
-        position: 'absolute',
-      }}
-      animate={{
-        x: [800, 800],
-        y: [100, 400],
-        transition: { duration: 3, repeat: Infinity },
-      }}
-    />
+        src={image}
+        alt="My Image"
+        style={{
+          width: '200px',
+          position: 'absolute',
+        }}
+        animate={{
+          x: [targetCoords.x, targetCoords.x],
+          y: [targetCoords.y - 75, targetCoords.y],
+
+          opacity: [1, 0],
+          scale: [1, 0.5],
+          transition: { duration: 3, ease: 'easeInOut' },
+
+        }}
+      />
     );
   };
   return (
     <div className="bg-[#242e52] min-h-screen text-white" >
-      <MovingAnimation />
+      {binResultName &&
+        <MovingAnimation />}
       <h1 className="text-4xl text-center pt-6 text-white"
       >Service</h1>
       <div className="grid grid-cols-2 m-10">
         <div className="flex flex-col items-center mx-4">
-          <FileUploader setImage={setImage} image={image} />
-          {image && <img className="h-96 rounded-xl shadow-2xl m-4"
-            src={image}
-            alt="upload"
-          />}
+          <FileUploader setImage={setImage} image={image} setBinResultName={setBinResultName} />
+          {
+            (binResultName && image) ?
+              (<motion.img
+                className='h-96'
+                src={image}
+                alt="My Image"
+                animate={{
+                  opacity: [1, 0],
+                  scale: [1, 0.9],
+                  transition: { duration: 1, ease: 'easeInOut' },
+                }}
+              />)
+              :
+              <img
+                className='h-96'
+                src={image}
+                alt=""
+              />
+
+          }
+
         </div>
         <div className="flex flex-col items-center justify-start mx-10">
           <div className="flex flex-wrap mx-4 mt-6">
             {bins.map((bin, index) => {
               return <button
                 className="text-white border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
+                type="button"
+                id={`bin_${(index - 1).toString()}`}
                 key={index} onClick={() => {
                   setBins(bins.filter((b) => b !== bin));
                   setUnSelectedBins([...unSelectedBins, bin]);
@@ -115,8 +141,8 @@ export default function Service() {
                 <img
                   className='h-36'
                   alt={bin}
-                  src= {`${map[bin]}`}> 
-                  </img>  
+                  src={`${map[bin]}`}>
+                </img>
               </button>
             })}
           </div>
@@ -131,7 +157,6 @@ export default function Service() {
               >{binResultName}</div>
               <div className="text-4xl text-center text-white"
               >{binResultProb}</div>
-              {/* <MovingAnimation /> */}
             </div>
           }
         </div>
