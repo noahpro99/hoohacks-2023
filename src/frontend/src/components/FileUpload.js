@@ -27,8 +27,8 @@ export default function App(props) {
     e.stopPropagation();
     console.log(e);
     console.log(e.target);
-    console.log(e.target.files);
-    const file = e.target.files[0];
+    console.log(e.dataTransfer.files);
+    const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -68,13 +68,14 @@ export default function App(props) {
         style={{
           border: "2px dashed #aaa",
           borderRadius: "10px",
-          padding: "20px",
+          paddingTop: "40px",
+          paddingBottom : "20px",
           textAlign: "center"
         }}
       >
         <p>Drag and drop a video file here</p>
         <p> or </p>
-        <div className="add-file-container">
+        <div className="add-file-container left " >
           <input
             type="file"
             id="image-file"
