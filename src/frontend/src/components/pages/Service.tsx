@@ -57,7 +57,7 @@ export default function Service() {
           <div className="flex flex-wrap mx-4">
             {bins.map((bin, index) => {
               return <button
-                className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-red-500 hover:border-red-500 hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
+                className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
                 key={index} onClick={() => {
                   setBins(bins.filter((b) => b !== bin));
                   setUnSelectedBins([...unSelectedBins, bin]);
