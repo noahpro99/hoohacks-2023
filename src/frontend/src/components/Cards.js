@@ -15,12 +15,12 @@ function Cards() {
               text2='Mechanical Engineering'
             />    
             <CardItem
-              src='images/img-2.jpeg'
+              src='images/img-noah.jpg'
               text='Noah Provenzano'
               text2='Computer Science and Physics'
             /> 
             <CardItem
-              src='images/img-2.jpeg'
+              src='images/img-rit.jpg'
               text='Rituraj Sharma'
               text2='Computer Science'
             />

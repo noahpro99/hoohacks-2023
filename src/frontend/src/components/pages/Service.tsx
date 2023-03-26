@@ -149,7 +149,7 @@ export default function Service() {
           </div>
           <DropdownButton unSelectedBins={unSelectedBins} setBins={setBins} setUnSelectedBins={setUnSelectedBins} />
           <button className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-white hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
-            onClick={onClickClick}>Submit</button>
+            onClick={onClickClick}>Sort</button>
         </div>
       </div>
     </div >
