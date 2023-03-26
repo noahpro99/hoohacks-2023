@@ -11,8 +11,14 @@ export default function Service() {
   const [bins, setBins] = React.useState<string[]>(['trash', 'recycle - plastic, glass, metal', 'compost - paper, food']);
   const [binResultName, setBinResultName] = React.useState("");
   const [binResultProb, setBinResultProb] = React.useState(0);
-  const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['', '']);
+  const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['batteries', 'e-waste']);
 
+  const map: { [id: string]: string; } = {};
+  map['trash'] = 'images/trash.png';
+  map['recycle - plastic, glass, metal'] = 'images/recycle.png';
+  map['compost - paper, food'] = 'images/compost.png';
+  map['batteries'] = 'images/batteries.png';
+  map['e-waste'] = 'images/e-waste.png';
 
   const onClickClick = () => {
     setLoading(true);
@@ -44,7 +50,7 @@ export default function Service() {
   };
 
   return (
-    <div className="bg-[#3c4150] min-h-screen text-white" >
+    <div className="bg-[#242e52] min-h-screen text-white" >
       <h1 className="text-4xl text-center pt-6 text-white"
       >Service</h1>
       <div className="grid grid-cols-2 m-10">
@@ -54,19 +60,19 @@ export default function Service() {
             src={image} alt="uploaded" />}
         </div>
         <div className="flex flex-col items-center justify-start mx-10">
-          <div className="flex flex-wrap mx-4">
+          <div className="flex flex-wrap mx-4 mt-16">
             {bins.map((bin, index) => {
               return <button
-                className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-red-500 hover:border-red-500 hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
+                className="bg-gradient-to-r from-navy-900 via-navy-600 to-navy-400 text-white  rounded-md m-2 p-2 hover:bg-red-500 hover:border-red-500 hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
                 key={index} onClick={() => {
                   setBins(bins.filter((b) => b !== bin));
                   setUnSelectedBins([...unSelectedBins, bin]);
                 }}>
                 <img
-                  className='h-32'
+                  className='h-36'
                   alt={bin}
-                  src='../../images/img-Mik.jpg' />
-                {bin}
+                  src= {`${map[bin]}`}> 
+                  </img>  
               </button>
             })}
           </div>
