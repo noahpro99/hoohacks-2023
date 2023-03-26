@@ -5,7 +5,7 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm install
 ARG PORT=80
-ARG API_URL=http://backend:5000
+ARG API_URL=http://localhost:5000
 ENV PORT=${PORT}
 ENV REACT_APP_API_URL=${API_URL}
 COPY . .
