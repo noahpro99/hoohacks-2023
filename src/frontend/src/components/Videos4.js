@@ -5,7 +5,7 @@ import VideoItem from './VideoItem';
 function Videos4() {
   return (
     <div className='videos'>
-      <h1>Click on any video to see the model working</h1>
+      <h1>Click on any image to see the model working</h1>
       <div className='videos__container'>
         <div className='videos__wrapper'>
           <ul className='videos__items'>

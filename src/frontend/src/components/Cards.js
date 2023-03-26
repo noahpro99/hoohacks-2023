@@ -13,19 +13,16 @@ function Cards() {
               src='images/img-Mik.jpg'
               text='Mikhail Sannikov'
               text2='Mechanical Engineering'
-              path='/service'
             />    
             <CardItem
               src='images/img-2.jpeg'
               text='Noah Provenzano'
               text2='Computer Science and Physics'
-              path='/videos'
             /> 
             <CardItem
               src='images/img-2.jpeg'
               text='Rituraj Sharma'
               text2='Computer Science'
-              path='/videos'
             />
           </ul>
         </div>

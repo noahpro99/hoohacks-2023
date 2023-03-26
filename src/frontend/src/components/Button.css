@@ -11,8 +11,8 @@
 }
 
 .btn--primary {
-  background-color: var(--primary);
-  color: #242424;
+  background-color: #E0DBD1;
+  color: #1d2854;
   border: 1px solid var(--primary);
 }
 
@@ -38,6 +38,6 @@
 .btn--medium:hover {
   transition: all 0.3s ease-out;
   background: #E0DBD1;
-  color: #242424;
+  color: #1d2854;
   transition: 250ms;
 }
