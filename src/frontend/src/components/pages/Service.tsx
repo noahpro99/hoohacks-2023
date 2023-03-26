@@ -2,6 +2,7 @@ import React from 'react';
 import '../../App.css';
 import FileUploader from '../FileUpload';
 import { sortRequest } from '../../types';
+import { motion } from 'framer-motion';
 import DropdownButton from '../DropDownMenu';
 
 export default function Service() {
@@ -43,8 +44,29 @@ export default function Service() {
     setLoading(false);
   };
 
+  const MovingAnimation = () => {
+    return(
+      <motion.img
+      src={'../../images/img-Mik.jpg'}
+      alt="My Image"
+      style={{
+        width: 200,
+        height: 200,
+        borderRadius: '50%',
+        overflow: 'hidden',
+        position: 'absolute',
+      }}
+      animate={{
+        x: [800, 800],
+        y: [100, 400],
+        transition: { duration: 3, repeat: Infinity },
+      }}
+    />
+    );
+  };
   return (
     <div className="bg-[#3c4150] min-h-screen text-white" >
+      <MovingAnimation />
       <h1 className="text-4xl text-center pt-6 text-white"
       >Service</h1>
       <div className="grid grid-cols-2 m-10">
@@ -81,6 +103,7 @@ export default function Service() {
               >{binResultName}</div>
               <div className="text-4xl text-center text-white"
               >{binResultProb}</div>
+              {/* <MovingAnimation /> */}
             </div>
           }
         </div>
