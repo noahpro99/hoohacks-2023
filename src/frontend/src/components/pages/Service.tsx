@@ -3,8 +3,11 @@ import '../../App.css';
 import FileUploader from '../FileUpload';
 import { sortRequest } from '../../types';
 import DropdownButton from '../DropDownMenu';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Service() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [image, setImage] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -19,6 +22,23 @@ export default function Service() {
   map['compost - paper, food'] = 'images/compost.png';
   map['batteries'] = 'images/batteries.png';
   map['e-waste'] = 'images/e-waste.png';
+  React.useEffect(() => {
+    if (searchParams.get('image')) {
+      fetch(`images/${searchParams.get('image')}.txt`)
+        .then(response => response.text())
+        .then(data => {
+          setImage(data);
+        }
+        )
+        .catch((error) => {
+          console.error('Error:', error);
+        }
+        );
+    }
+    else {
+      setImage("");
+    }
+  }, [searchParams]);
 
   const onClickClick = () => {
     setLoading(true);
@@ -56,14 +76,16 @@ export default function Service() {
       <div className="grid grid-cols-2 m-10">
         <div className="flex flex-col items-center mx-4">
           <FileUploader setImage={setImage} image={image} />
-          {image && <img className="h-96"
-            src={image} alt="uploaded" />}
+          {image && <img className="h-96 rounded-xl shadow-2xl m-4"
+            src={image}
+            alt="upload"
+          />}
         </div>
         <div className="flex flex-col items-center justify-start mx-10">
           <div className="flex flex-wrap mx-4 mt-16">
             {bins.map((bin, index) => {
               return <button
-                className="bg-gradient-to-r from-navy-900 via-navy-600 to-navy-400 text-white  rounded-md m-2 p-2 hover:bg-red-500 hover:border-red-500 hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
+                className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
                 key={index} onClick={() => {
                   setBins(bins.filter((b) => b !== bin));
                   setUnSelectedBins([...unSelectedBins, bin]);

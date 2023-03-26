@@ -5,7 +5,7 @@ function CardItem(props) {
   return (
     <>
       <li className='cards__item'>
-        <Link className='cards__item__link' to={props.path}>
+        <div className='cards__item__structure'>
           <figure className='cards__item__pic-wrap'>
             <img
               className='cards__item__img'
@@ -17,7 +17,7 @@ function CardItem(props) {
             <h1 className='cards__item__text'>{props.text}</h1>
             <h1 className='cards__item__text'>{props.text2}</h1>
           </div>
-        </Link>
+        </div>
       </li>
     </>
   );
