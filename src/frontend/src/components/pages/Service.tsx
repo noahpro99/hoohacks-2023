@@ -4,16 +4,42 @@ import FileUploader from '../FileUpload';
 import { sortRequest } from '../../types';
 import { motion } from 'framer-motion';
 import DropdownButton from '../DropDownMenu';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Service() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [image, setImage] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [bins, setBins] = React.useState<string[]>(['trash', 'recycle', 'compost']);
+  const [bins, setBins] = React.useState<string[]>(['trash', 'recycle - plastic, glass, metal', 'compost - paper, food']);
   const [binResultName, setBinResultName] = React.useState("");
   const [binResultProb, setBinResultProb] = React.useState(0);
-  const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['recycle plastic', 'recycle paper']);
+  const [unSelectedBins, setUnSelectedBins] = React.useState<string[]>(['batteries', 'e-waste']);
   const [targetCoords, setTargetCoords] = React.useState({ x: 0, y: 0 });
 
+  const map: { [id: string]: string; } = {};
+  map['trash'] = 'images/trash.png';
+  map['recycle - plastic, glass, metal'] = 'images/recycle.png';
+  map['compost - paper, food'] = 'images/compost.png';
+  map['batteries'] = 'images/batteries.png';
+  map['e-waste'] = 'images/e-waste.png';
+  React.useEffect(() => {
+    if (searchParams.get('image')) {
+      fetch(`images/${searchParams.get('image')}.txt`)
+        .then(response => response.text())
+        .then(data => {
+          setImage(data);
+        }
+        )
+        .catch((error) => {
+          console.error('Error:', error);
+        }
+        );
+    }
+    else {
+      setImage("");
+    }
+  }, [searchParams]);
 
   const onClickClick = () => {
     setLoading(true);
@@ -50,28 +76,28 @@ export default function Service() {
 
   const MovingAnimation = () => {
     console.log(targetCoords);
-    return(
+    return (
       <motion.img
         src={image}
         alt="My Image"
         style={{
           width: '200px',
-        position: 'absolute',
-      }}
-      animate={{
-        x: [targetCoords.x, targetCoords.x],
-        y: [targetCoords.y - 75, targetCoords.y],
+          position: 'absolute',
+        }}
+        animate={{
+          x: [targetCoords.x, targetCoords.x],
+          y: [targetCoords.y - 75, targetCoords.y],
 
-        opacity: [1, 0],
-        scale: [1, 0.5],
-        transition: { duration: 3, ease: 'easeInOut' },
+          opacity: [1, 0],
+          scale: [1, 0.5],
+          transition: { duration: 3, ease: 'easeInOut' },
 
-      }}
-    />
+        }}
+      />
     );
   };
   return (
-    <div className="bg-[#3c4150] min-h-screen text-white" >
+    <div className="bg-[#242e52] min-h-screen text-white" >
       {binResultName &&
         <MovingAnimation />}
       <h1 className="text-4xl text-center pt-6 text-white"
@@ -102,10 +128,10 @@ export default function Service() {
 
         </div>
         <div className="flex flex-col items-center justify-start mx-10">
-          <div className="flex flex-wrap mx-4">
+          <div className="flex flex-wrap mx-4 mt-6">
             {bins.map((bin, index) => {
               return <button
-                className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
+                className="text-white border-white rounded-md m-2 p-2 hover:bg-[#E0DBD1] hover:border-[#E0DBD1] hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
                 type="button"
                 id={`bin_${(index - 1).toString()}`}
                 key={index} onClick={() => {
@@ -113,10 +139,10 @@ export default function Service() {
                   setUnSelectedBins([...unSelectedBins, bin]);
                 }}>
                 <img
-                  className='h-32'
+                  className='h-36'
                   alt={bin}
-                  src='../../images/img-Mik.jpg' />
-                {bin}
+                  src={`${map[bin]}`}>
+                </img>
               </button>
             })}
           </div>
