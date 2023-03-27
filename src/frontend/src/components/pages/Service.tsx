@@ -136,18 +136,19 @@ export default function Service() {
                 type="button"
                 id={`bin_${(index).toString()}`}
                 key={index} onClick={() => {
+                  setBinResultName("");
                   setBins(bins.filter((b) => b !== bin));
                   setUnSelectedBins([...unSelectedBins, bin]);
                 }}>
                 <img
-                  className='h-36 rounded-2xl shadow-2xl'
+                  className='h-48'
                   alt={bin}
                   src={`${map[bin]}`}>
                 </img>
               </button>
             })}
           </div>
-          <DropdownButton unSelectedBins={unSelectedBins} setBins={setBins} setUnSelectedBins={setUnSelectedBins} />
+          <DropdownButton unSelectedBins={unSelectedBins} setBins={setBins} setUnSelectedBins={setUnSelectedBins} setBinResultName={setBinResultName} />
           <button className="bg-[#3c4150] text-white border-2 border-white rounded-md m-2 p-2 hover:bg-white hover:scale-110 hover:text-[#3c4150] hover:shadow-2xl"
             onClick={onClickClick}>Sort</button>
         </div>

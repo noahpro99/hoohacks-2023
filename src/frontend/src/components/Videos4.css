@@ -1,7 +1,8 @@
 .videos {
     padding: 4rem;
     background: #f1f0eb;
-    height: 100vh;
+    min-height: 100%;
+      height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;

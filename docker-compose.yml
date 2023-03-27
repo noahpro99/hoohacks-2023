@@ -5,8 +5,8 @@ services:
     build:
       context: src/frontend/
       # for production, use the following
-      # dockerfile: dockerfile.prod
-      dockerfile: dockerfile
+      dockerfile: dockerfile.prod
+      # dockerfile: dockerfile
       args:
         - API_URL=http://localhost:5000
         - PORT=80

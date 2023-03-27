@@ -4,14 +4,16 @@ interface DropdownButtonProps {
   unSelectedBins: string[];
   setBins: React.Dispatch<React.SetStateAction<string[]>>;
   setUnSelectedBins: React.Dispatch<React.SetStateAction<string[]>>;
+  setBinResultName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const DropdownButton: React.FC<DropdownButtonProps> = ({ unSelectedBins, setBins, setUnSelectedBins }) => {
+const DropdownButton: React.FC<DropdownButtonProps> = ({ unSelectedBins, setBins, setUnSelectedBins, setBinResultName: setBinResult }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionClick = (bin: string) => {
     setBins((prev) => [...prev, bin]);
     setUnSelectedBins((prev) => prev.filter((b) => b !== bin));
+    setBinResult("");
     setIsOpen(false);
   };
 
